@@ -11,7 +11,8 @@ module.exports = function (app) {
     app.use(bodyParser.urlencoded({extended: true})); // Parse out any JSON from body and handle URL encoded data
 
     // Add a method to get all open todos
-    app.get('/api/todos/open', function (req, res) {
+    app.get('/api/todos/all/open', function (req, res) {
+
         console.log("Get all ToDos for a user");
         Todos.find({isDone: false}, function (err, todos) { //Use the find method on the data model to search DB
             if (err) {

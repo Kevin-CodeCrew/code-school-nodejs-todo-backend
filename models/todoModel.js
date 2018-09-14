@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 const todoSchema = new Schema({
     username: String,
     todo: String,
-    isDone: Boolean
+    isDone: Boolean,
+    dueDate: Date
 });
 
 const Todos = mongoose.model('Todos', todoSchema);

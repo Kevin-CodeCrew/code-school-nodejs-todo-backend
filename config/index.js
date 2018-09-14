@@ -6,9 +6,8 @@ const configValues = require('./config');
 module.exports = {
 
     getDbConnectionString: function () {
-        // return 'YOUR_MONGO_URL';
-        return 'mongodb://' + configValues.uname + ':' + configValues.pwd + '@blah_blah_blah';
-    },
-
+        // mongodb://<dbuser>:<dbpassword>@ds147942.mlab.com:47942/nodetodo
+        return 'mongodb://' + configValues.uname + ':' + configValues.pwd + '@ds147942.mlab.com:47942/nodetodo';
+    }
 
 };

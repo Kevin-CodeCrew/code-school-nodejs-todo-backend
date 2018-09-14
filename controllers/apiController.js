@@ -12,7 +12,7 @@ module.exports = function (app) {
 
     // Add a method to get all open todos
     app.get('/api/todos/open', function (req, res) {
-
+        console.log("Get all ToDos for a user");
         Todos.find({isDone: false}, function (err, todos) { //Use the find method on the data model to search DB
             if (err) {
                 throw err; // If we get an error then bail
@@ -57,6 +57,8 @@ module.exports = function (app) {
 
     // ROUTE: GET a specific ToDo list item by it's record ID
     app.get('/api/todo/:id', function (req, res) {
+        console.log("Get a specific ToDo for a user");
+
         Todos.findById({_id: req.params.id}, function (err, todo) { //Use the findID method on the data model to search DB
             if (err) {
                 throw err; // If we get an error then bail
@@ -70,12 +72,14 @@ module.exports = function (app) {
 
     // ROUTE: POST (create) a new Todo item to my list
     app.post('/api/todo', function (req, res) {
+        console.log("Creating a ToDo for a user");
 
+        let currentDate = moment();
         const newTodo = Todos({
             username: req.body.username,
             todo: req.body.todo,
             isDone: req.body.isDone,
-            // hasAttachment: req.body.hasAttachment
+            dueDate: currentDate // Current date
         });
         newTodo.save(function (err) {
             if (err) {
@@ -89,22 +93,25 @@ module.exports = function (app) {
 
     // ROUTE: UPDATE and existing item
     app.put('/api/todo', function (req, res) {
+        console.log("Update a ToDo for a user: "+req.body.id);
 
-        Todos.findOneAndUpdate(req.body.id, {
+        Todos.findByIdAndUpdate(req.body.id, {
             todo: req.body.todo,
-            isDone: req.body.isDone,
-          //  hasAttachment: req.body.hasAttachment
+            isDone: req.body.isDone
         }, function (err, todo) {
             if (err) {
                 throw err; // If we get an error then bail
             }
             // Use Express to send a simple SUCCESS message
+            console.log(todo);
             res.json({result: 'OK'});
         });
+
     });
 
     // ROUTE: DELETE an existing todo item by its ID
     app.delete('/api/todo', function (req, res) {
+        console.log("Delete a ToDo for a user");
 
         // Todos.findOneAndDelete(req.body.id, function (err) {  // FIXME: Doesn't work from Postman (?)
             Todos.findByIdAndRemove(req.body.id, function (err) {

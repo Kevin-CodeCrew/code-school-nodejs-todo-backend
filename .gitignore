@@ -5,5 +5,4 @@ npm-debug.log
 .DS_Store
 .idea/
 NodeToDo.iml
-client/
 code-school-react-todo-frontend/

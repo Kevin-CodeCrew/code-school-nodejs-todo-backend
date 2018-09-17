@@ -4,7 +4,6 @@ const moment = require('moment');
 
 // Include body parser
 const bodyParser = require('body-parser'); // In node_modules
-
 module.exports = function (app) {
 
     app.use(bodyParser.json()); // Use body parser middleware
@@ -56,7 +55,7 @@ module.exports = function (app) {
     });
 
 
-    // ROUTE: GET a specific ToDo list item by it's record ID
+    // ROUTE: GET a specific To Do list item by it's record ID
     app.get('/api/todo/:id', function (req, res) {
         console.log("Get a specific ToDo for a user");
 
@@ -112,7 +111,7 @@ module.exports = function (app) {
 
     // ROUTE: DELETE an existing todo item by its ID
     app.delete('/api/todo', function (req, res) {
-        console.log("Delete a ToDo for a user");
+        console.log("Delete a ToDo for a user: "+req.body.id);
 
         // Todos.findOneAndDelete(req.body.id, function (err) {  // FIXME: Doesn't work from Postman (?)
             Todos.findByIdAndRemove(req.body.id, function (err) {

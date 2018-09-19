@@ -8,6 +8,12 @@ module.exports = function (app) {
 
     app.use(bodyParser.json()); // Use body parser middleware
     app.use(bodyParser.urlencoded({extended: true})); // Parse out any JSON from body and handle URL encoded data
+    // Allow CORS
+    app.use(function(request, response, next) {
+        response.header("Access-Control-Allow-Origin", "*");
+        response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
 
     // Add a method to get all open todos
     app.get('/api/todos/all/open', function (req, res) {
@@ -41,7 +47,7 @@ module.exports = function (app) {
     // ROUTE: GET ToDo list items older than somenumber of days that are still open
     app.get('/api/todo/age/:numdays', function (req, res) {
         let ageDays = req.params.numdays;
-        console.log(`Checking for ToDos older than ${ageDays} days.`)
+        console.log(`Checking for ToDos older than ${ageDays} days.`);
         var cutoff = moment().subtract(ageDays, 'days');
         console.log(cutoff);
 

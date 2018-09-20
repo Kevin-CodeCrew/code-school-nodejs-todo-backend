@@ -9,9 +9,16 @@ module.exports = function (app) {
     app.use(bodyParser.json()); // Use body parser middleware
     app.use(bodyParser.urlencoded({extended: true})); // Parse out any JSON from body and handle URL encoded data
     // Allow CORS
-    app.use(function(request, response, next) {
-        response.header("Access-Control-Allow-Origin", "*");
-        response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    // app.use(function(request, response, next) {
+    //     response.header("Access-Control-Allow-Origin", "*");
+    //     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    //     next();
+    // });
+
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         next();
     });
 
@@ -97,12 +104,12 @@ module.exports = function (app) {
 
     });
 
-    // ROUTE: UPDATE and existing item
+    // ROUTE: UPDATE and existing item status
     app.put('/api/todo', function (req, res) {
-        console.log("Update a ToDo for a user: "+req.body.id);
+        console.log("Update Status of a ToDo for a user: "+req.body.id);
 
         Todos.findByIdAndUpdate(req.body.id, {
-            todo: req.body.todo,
+            // todo: req.body.todo,
             isDone: req.body.isDone
         }, function (err, todo) {
             if (err) {
